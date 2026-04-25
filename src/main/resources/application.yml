@@ -64,6 +64,11 @@ openai:
 # Application settings
 app:
   frontend-url: ${FRONTEND_URL:http://localhost:3000}
+  cors:
+    # Comma-separated list of exact allowed origins
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:5173,https://dietrix-front.vercel.app}
+    # Comma-separated regex patterns (e.g. for Vercel preview deployments)
+    allowed-origin-patterns: ${CORS_ALLOWED_ORIGIN_PATTERNS:https://dietrix-front-.*\.vercel\.app}
 
 # Firebase Cloud Messaging (push notifications)
 # To enable: set FIREBASE_ENABLED=true and provide a service-account JSON file

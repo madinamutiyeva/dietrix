@@ -1,6 +1,7 @@
 package kz.dietrix.auth.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -30,6 +31,14 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomUserDetailsService userDetailsService;
+
+    /** Comma-separated list of exact CORS origins. Configurable via CORS_ALLOWED_ORIGINS env var. */
+    @Value("${app.cors.allowed-origins:http://localhost:3000,http://localhost:5173,https://dietrix-front.vercel.app}")
+    private String allowedOrigins;
+
+    /** Comma-separated regex patterns (e.g. for Vercel preview deployments). */
+    @Value("${app.cors.allowed-origin-patterns:https://dietrix-front-.*\\.vercel\\.app}")
+    private String allowedOriginPatterns;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -77,9 +86,24 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:5173"));
+
+        List<String> origins = java.util.Arrays.stream(allowedOrigins.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
+        configuration.setAllowedOrigins(origins);
+
+        List<String> patterns = java.util.Arrays.stream(allowedOriginPatterns.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
+        if (!patterns.isEmpty()) {
+            configuration.setAllowedOriginPatterns(patterns);
+        }
+
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
+        configuration.setExposedHeaders(List.of("Authorization", "Content-Disposition"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
 
@@ -88,4 +112,3 @@ public class SecurityConfig {
         return source;
     }
 }
-
