@@ -1,0 +1,50 @@
+-- -- V2: User profiles and preferences
+--
+-- CREATE TABLE user_profiles (
+--     id BIGSERIAL PRIMARY KEY,
+--     user_id BIGINT NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+--     gender VARCHAR(20),
+--     age INTEGER,
+--     height_cm DOUBLE PRECISION,
+--     weight_kg DOUBLE PRECISION,
+--     goal VARCHAR(30),
+--     activity_level VARCHAR(30),
+--     avatar_url VARCHAR(500),
+--     onboarding_completed BOOLEAN NOT NULL DEFAULT FALSE,
+--     onboarding_step INTEGER NOT NULL DEFAULT 0,
+--     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+--     updated_at TIMESTAMP
+-- );
+--
+-- CREATE INDEX idx_user_profiles_user ON user_profiles(user_id);
+--
+-- CREATE TABLE user_preferences (
+--     id BIGSERIAL PRIMARY KEY,
+--     user_id BIGINT NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+--     diet_type VARCHAR(30) DEFAULT 'NONE',
+--     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+--     updated_at TIMESTAMP
+-- );
+--
+-- CREATE INDEX idx_user_preferences_user ON user_preferences(user_id);
+--
+-- CREATE TABLE user_allergies (
+--     preference_id BIGINT NOT NULL REFERENCES user_preferences(id) ON DELETE CASCADE,
+--     allergy VARCHAR(30) NOT NULL
+-- );
+--
+-- CREATE TABLE user_liked_foods (
+--     preference_id BIGINT NOT NULL REFERENCES user_preferences(id) ON DELETE CASCADE,
+--     food VARCHAR(255) NOT NULL
+-- );
+--
+-- CREATE TABLE user_disliked_foods (
+--     preference_id BIGINT NOT NULL REFERENCES user_preferences(id) ON DELETE CASCADE,
+--     food VARCHAR(255) NOT NULL
+-- );
+--
+-- CREATE TABLE user_cuisine_preferences (
+--     preference_id BIGINT NOT NULL REFERENCES user_preferences(id) ON DELETE CASCADE,
+--     cuisine VARCHAR(255) NOT NULL
+-- );
+--

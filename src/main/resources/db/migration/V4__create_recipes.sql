@@ -1,0 +1,47 @@
+-- -- V4: Recipes, ingredients, favorites
+--
+-- CREATE TABLE recipes (
+--     id BIGSERIAL PRIMARY KEY,
+--     title VARCHAR(500) NOT NULL,
+--     description TEXT,
+--     instructions TEXT,
+--     calories INTEGER,
+--     protein INTEGER,
+--     carbs INTEGER,
+--     fat INTEGER,
+--     cook_time_minutes INTEGER,
+--     cuisine VARCHAR(100),
+--     image_url VARCHAR(500),
+--     meal_type VARCHAR(50),
+--     diet_type VARCHAR(50),
+--     is_generated BOOLEAN NOT NULL DEFAULT FALSE,
+--     generated_for_user_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
+--     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+--     updated_at TIMESTAMP
+-- );
+--
+-- CREATE INDEX idx_recipes_cuisine ON recipes(cuisine);
+-- CREATE INDEX idx_recipes_generated ON recipes(is_generated);
+-- CREATE INDEX idx_recipes_user ON recipes(generated_for_user_id);
+--
+-- CREATE TABLE recipe_ingredients (
+--     id BIGSERIAL PRIMARY KEY,
+--     recipe_id BIGINT NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
+--     name VARCHAR(255) NOT NULL,
+--     amount VARCHAR(50),
+--     unit VARCHAR(50)
+-- );
+--
+-- CREATE INDEX idx_recipe_ingredients_recipe ON recipe_ingredients(recipe_id);
+--
+-- CREATE TABLE favorite_recipes (
+--     id BIGSERIAL PRIMARY KEY,
+--     user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+--     recipe_id BIGINT NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
+--     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+--     updated_at TIMESTAMP,
+--     UNIQUE(user_id, recipe_id)
+-- );
+--
+-- CREATE INDEX idx_favorite_recipes_user ON favorite_recipes(user_id);
+--

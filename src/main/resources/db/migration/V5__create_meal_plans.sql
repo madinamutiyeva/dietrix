@@ -1,0 +1,51 @@
+-- -- V5: Meal plans, days, meals, shopping list
+--
+-- CREATE TABLE meal_plans (
+--     id BIGSERIAL PRIMARY KEY,
+--     user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+--     week_start_date DATE NOT NULL,
+--     week_end_date DATE NOT NULL,
+--     status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
+--     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+--     updated_at TIMESTAMP
+-- );
+--
+-- CREATE INDEX idx_meal_plans_user ON meal_plans(user_id);
+-- CREATE INDEX idx_meal_plans_status ON meal_plans(status);
+--
+-- CREATE TABLE meal_plan_days (
+--     id BIGSERIAL PRIMARY KEY,
+--     meal_plan_id BIGINT NOT NULL REFERENCES meal_plans(id) ON DELETE CASCADE,
+--     date DATE NOT NULL,
+--     day_of_week VARCHAR(20) NOT NULL,
+--     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+--     updated_at TIMESTAMP
+-- );
+--
+-- CREATE INDEX idx_meal_plan_days_plan ON meal_plan_days(meal_plan_id);
+--
+-- CREATE TABLE meal_plan_meals (
+--     id BIGSERIAL PRIMARY KEY,
+--     meal_plan_day_id BIGINT NOT NULL REFERENCES meal_plan_days(id) ON DELETE CASCADE,
+--     meal_type VARCHAR(20) NOT NULL,
+--     recipe_id BIGINT REFERENCES recipes(id) ON DELETE SET NULL,
+--     is_completed BOOLEAN NOT NULL DEFAULT FALSE,
+--     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+--     updated_at TIMESTAMP
+-- );
+--
+-- CREATE INDEX idx_meal_plan_meals_day ON meal_plan_meals(meal_plan_day_id);
+--
+-- CREATE TABLE shopping_list_items (
+--     id BIGSERIAL PRIMARY KEY,
+--     meal_plan_id BIGINT NOT NULL REFERENCES meal_plans(id) ON DELETE CASCADE,
+--     name VARCHAR(255) NOT NULL,
+--     amount VARCHAR(50),
+--     unit VARCHAR(50),
+--     is_purchased BOOLEAN NOT NULL DEFAULT FALSE,
+--     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+--     updated_at TIMESTAMP
+-- );
+--
+-- CREATE INDEX idx_shopping_list_plan ON shopping_list_items(meal_plan_id);
+

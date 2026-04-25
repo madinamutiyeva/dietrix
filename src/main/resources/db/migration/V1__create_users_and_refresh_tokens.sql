@@ -1,0 +1,27 @@
+-- -- V1: Users and refresh tokens
+--
+-- CREATE TABLE users (
+--     id BIGSERIAL PRIMARY KEY,
+--     email VARCHAR(255) NOT NULL UNIQUE,
+--     password VARCHAR(255) NOT NULL,
+--     name VARCHAR(100) NOT NULL,
+--     role VARCHAR(20) NOT NULL DEFAULT 'USER',
+--     enabled BOOLEAN NOT NULL DEFAULT TRUE,
+--     reset_token VARCHAR(255),
+--     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+--     updated_at TIMESTAMP
+-- );
+--
+-- CREATE INDEX idx_users_email ON users(email);
+-- CREATE INDEX idx_users_reset_token ON users(reset_token);
+--
+-- CREATE TABLE refresh_tokens (
+--     id BIGSERIAL PRIMARY KEY,
+--     token VARCHAR(255) NOT NULL UNIQUE,
+--     user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+--     expiry_date TIMESTAMP WITH TIME ZONE NOT NULL
+-- );
+--
+-- CREATE INDEX idx_refresh_tokens_token ON refresh_tokens(token);
+-- CREATE INDEX idx_refresh_tokens_user ON refresh_tokens(user_id);
+--

@@ -1,0 +1,17 @@
+-- -- V3: Pantry items
+--
+-- CREATE TABLE pantry_items (
+--     id BIGSERIAL PRIMARY KEY,
+--     user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+--     name VARCHAR(255) NOT NULL,
+--     quantity DOUBLE PRECISION,
+--     unit VARCHAR(50),
+--     category VARCHAR(100),
+--     expiration_date DATE,
+--     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+--     updated_at TIMESTAMP
+-- );
+--
+-- CREATE INDEX idx_pantry_items_user ON pantry_items(user_id);
+-- CREATE INDEX idx_pantry_items_category ON pantry_items(category);
+--

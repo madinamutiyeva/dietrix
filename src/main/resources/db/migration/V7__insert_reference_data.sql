@@ -1,0 +1,43 @@
+-- -- V7: Insert initial FAQ data
+--
+-- INSERT INTO faq_items (question, answer, category) VALUES
+-- ('How many calories should I eat per day?',
+--  'Your daily calorie needs depend on age, gender, weight, height, and activity level. Dietrix calculates this automatically based on your profile using the Mifflin-St Jeor equation.',
+--  'nutrition'),
+--
+-- ('What is BMI and what does it mean?',
+--  'BMI (Body Mass Index) is a measure of body fat based on height and weight. Normal BMI is 18.5-24.9. However, BMI doesn''t account for muscle mass, so it''s just one of many health indicators.',
+--  'health'),
+--
+-- ('How much protein do I need?',
+--  'Protein needs vary by goal: 1.6g/kg for maintenance, 2.0g/kg for weight loss (to preserve muscle), and 2.2g/kg for muscle building. Dietrix calculates this based on your profile.',
+--  'nutrition'),
+--
+-- ('What are macronutrients?',
+--  'Macronutrients are protein, carbohydrates, and fat. Protein and carbs provide 4 calories per gram, while fat provides 9 calories per gram. A balanced intake is key for health.',
+--  'nutrition'),
+--
+-- ('How does meal plan generation work?',
+--  'Dietrix uses AI to generate a personalized 7-day meal plan based on your calorie targets, dietary preferences, allergies, and available pantry ingredients.',
+--  'features'),
+--
+-- ('Can I customize my meal plan?',
+--  'Yes! You can set your dietary preferences, allergies, liked and disliked foods during onboarding. The AI uses all of this to generate personalized recipes.',
+--  'features'),
+--
+-- ('What should I eat before a workout?',
+--  'A combination of carbs and protein 1-2 hours before exercise is ideal. Examples: banana with peanut butter, oatmeal with berries, or a small sandwich with lean protein.',
+--  'nutrition'),
+--
+-- ('How much water should I drink daily?',
+--  'A general guideline is 2-3 liters (8-12 cups) per day. Needs increase with exercise, hot weather, and higher body weight. Listen to your body and drink when thirsty.',
+--  'health'),
+--
+-- ('Is intermittent fasting safe?',
+--  'For most healthy adults, intermittent fasting (like 16:8) is safe. However, it''s not recommended for pregnant women, people with eating disorders, or certain medical conditions. Consult a doctor.',
+--  'nutrition'),
+--
+-- ('What is the Mediterranean diet?',
+--  'The Mediterranean diet emphasizes fruits, vegetables, whole grains, fish, olive oil, and nuts. It''s one of the most researched and recommended dietary patterns for overall health.',
+--  'nutrition');
+--

@@ -1,0 +1,92 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: dietrix
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:Dietrix}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      pool-name: DietrixHikariPool
+      maximum-pool-size: ${DB_POOL_SIZE:30}
+      minimum-idle: 5
+      connection-timeout: 20000        # 20s wait for a connection
+      idle-timeout: 300000             # 5 min
+      max-lifetime: 1200000            # 20 min (must be < PG idle_in_transaction_session_timeout)
+      keepalive-time: 120000           # 2 min — keep idle connections alive
+      leak-detection-threshold: 30000  # warn if a connection is held > 30s
+
+  jpa:
+    open-in-view: false                # CRITICAL: prevents SSE/long-running requests from holding DB connections
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+#  flyway:
+#    enabled: true
+#    locations: classpath:db/migration
+#    baseline-on-migrate: true
+
+  mail:
+    host: ${MAIL_HOST:smtp.mail.ru}
+    port: ${MAIL_PORT:465}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          starttls:
+            enable: false
+
+# JWT Configuration
+jwt:
+  secret: ${JWT_SECRET:}
+  access-expiration: ${JWT_ACCESS_EXPIRATION:86400000}    # 1 day
+  refresh-expiration: ${JWT_REFRESH_EXPIRATION:604800000} # 7 days
+
+# OpenAI Configuration
+openai:
+  api-key: ${OPENAI_API_KEY:}
+  model: ${OPENAI_MODEL:gpt-4o-mini}
+  base-url: ${OPENAI_BASE_URL:https://api.openai.com}
+
+# Application settings
+app:
+  frontend-url: ${FRONTEND_URL:http://localhost:3000}
+
+# Firebase Cloud Messaging (push notifications)
+# To enable: set FIREBASE_ENABLED=true and provide a service-account JSON file
+# (downloaded from Firebase Console → Project Settings → Service accounts).
+firebase:
+  enabled: ${FIREBASE_ENABLED:false}
+  service-account: ${FIREBASE_SERVICE_ACCOUNT:}    # e.g. file:/etc/dietrix/firebase.json or classpath:firebase.json
+
+# Logging
+logging:
+  level:
+    root: INFO
+    kz.dietrix: DEBUG
+    org.springframework.security: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# Swagger
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: method
+

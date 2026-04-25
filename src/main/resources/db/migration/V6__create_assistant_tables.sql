@@ -1,0 +1,24 @@
+-- -- V6: Chat history and FAQ items
+--
+-- CREATE TABLE chat_history (
+--     id BIGSERIAL PRIMARY KEY,
+--     user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+--     message TEXT NOT NULL,
+--     role VARCHAR(20) NOT NULL,
+--     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+--     updated_at TIMESTAMP
+-- );
+--
+-- CREATE INDEX idx_chat_history_user ON chat_history(user_id);
+--
+-- CREATE TABLE faq_items (
+--     id BIGSERIAL PRIMARY KEY,
+--     question TEXT NOT NULL,
+--     answer TEXT NOT NULL,
+--     category VARCHAR(100),
+--     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+--     updated_at TIMESTAMP
+-- );
+--
+-- CREATE INDEX idx_faq_items_category ON faq_items(category);
+--
