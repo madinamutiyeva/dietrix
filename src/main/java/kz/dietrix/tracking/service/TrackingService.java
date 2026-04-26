@@ -13,12 +13,14 @@ import kz.dietrix.userprofile.dto.UserTargetsDto;
 import kz.dietrix.userprofile.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.List;
 
@@ -32,12 +34,25 @@ public class TrackingService {
     private final FreeMealLogRepository freeMealLogRepository;
     private final UserProfileService userProfileService;
 
+    /** Timezone used to compute "today" for daily counters (water, free meals, etc.). */
+    @Value("${app.default-timezone:Asia/Almaty}")
+    private String defaultTimezone;
+
+    /** Today's date in the configured timezone (NOT server UTC). */
+    private LocalDate today() {
+        try {
+            return LocalDate.now(ZoneId.of(defaultTimezone));
+        } catch (Exception e) {
+            return LocalDate.now();
+        }
+    }
+
     // ─── Weight ──────────────────────────────────────────────────────────────
 
     @Transactional
     public WeightLogDto addWeight(WeightLogDto dto) {
         User user = userProfileService.getCurrentUser();
-        LocalDate day = dto.getLoggedOn() != null ? dto.getLoggedOn() : LocalDate.now();
+        LocalDate day = dto.getLoggedOn() != null ? dto.getLoggedOn() : today();
 
         WeightLog log = weightLogRepository.findByUserIdAndLoggedOn(user.getId(), day)
                 .orElseGet(() -> WeightLog.builder().user(user).loggedOn(day).build());
@@ -57,7 +72,7 @@ public class TrackingService {
     @Transactional(readOnly = true)
     public WeightStatsDto getWeightStats(int days) {
         User user = userProfileService.getCurrentUser();
-        LocalDate to = LocalDate.now();
+        LocalDate to = today();
         LocalDate from = to.minusDays(Math.max(1, days) - 1L);
 
         List<WeightLog> logs = weightLogRepository.findByUserIdAndDateRange(user.getId(), from, to);
@@ -135,6 +150,15 @@ public class TrackingService {
         WaterLog log = waterLogRepository.findByIdAndUserId(id, user.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("WaterLog", "id", id));
         waterLogRepository.delete(log);
+    }
+
+    /** Delete ALL water logs of the current user for the given date (defaults to today). */
+    @Transactional
+    public WaterStatusDto clearWaterForDate(LocalDate date) {
+        User user = userProfileService.getCurrentUser();
+        if (date == null) date = LocalDate.now();
+        waterLogRepository.deleteByUserIdAndLoggedOn(user.getId(), date);
+        return getWaterToday();
     }
 
     private int computeWaterTargetMl() {
@@ -225,4 +249,3 @@ public class TrackingService {
                 .build();
     }
 }
-

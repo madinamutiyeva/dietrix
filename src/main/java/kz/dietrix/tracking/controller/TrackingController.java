@@ -62,6 +62,13 @@ public class TrackingController {
         return ApiResponse.success(trackingService.getWaterToday());
     }
 
+    @DeleteMapping("/water/today")
+    @Operation(summary = "Clear all water log entries for today")
+    public ApiResponse<WaterStatusDto> clearWaterToday() {
+        return ApiResponse.success("Today's water cleared",
+                trackingService.clearWaterForDate(null));
+    }
+
     @DeleteMapping("/water/{id}")
     @Operation(summary = "Delete a water log entry")
     public ApiResponse<Void> deleteWater(@PathVariable Long id) {
@@ -93,4 +100,3 @@ public class TrackingController {
         return ApiResponse.success("Free meal log deleted");
     }
 }
-

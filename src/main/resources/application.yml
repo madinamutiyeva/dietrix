@@ -51,7 +51,7 @@ spring:
 
 # JWT Configuration
 jwt:
-  secret: ${JWT_SECRET:change-me-to-a-long-random-secret-at-least-256-bits}
+  secret: ${JWT_SECRET:myVeryLongSecretKeyForJwtTokenGenerationThatIsAtLeast256BitsLong2024}
   access-expiration: ${JWT_ACCESS_EXPIRATION:86400000}    # 1 day
   refresh-expiration: ${JWT_REFRESH_EXPIRATION:604800000} # 7 days
 
@@ -64,6 +64,9 @@ openai:
 # Application settings
 app:
   frontend-url: ${FRONTEND_URL:http://localhost:3000}
+  # Timezone used to compute "today" for daily counters (water, free meals, etc.)
+  # Defaults to Asia/Almaty so the daily reset matches the user's local midnight.
+  default-timezone: ${APP_TIMEZONE:Asia/Almaty}
   cors:
     # Comma-separated list of exact allowed origins
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:5173,https://dietrix-front.vercel.app}

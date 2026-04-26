@@ -71,6 +71,13 @@ public class UserTrackingAliasController {
         return ApiResponse.success(trackingService.getWaterToday());
     }
 
+    @DeleteMapping("/water-logs/today")
+    @Operation(summary = "Clear all water log entries for today")
+    public ApiResponse<WaterStatusDto> clearWaterToday() {
+        return ApiResponse.success("Today's water cleared",
+                trackingService.clearWaterForDate(null));
+    }
+
     @DeleteMapping("/water-logs/{id}")
     @Operation(summary = "Delete a water log entry")
     public ApiResponse<Void> deleteWater(@PathVariable Long id) {
@@ -118,4 +125,3 @@ public class UserTrackingAliasController {
         }
     }
 }
-

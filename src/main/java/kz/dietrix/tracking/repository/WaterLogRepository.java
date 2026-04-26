@@ -17,6 +17,8 @@ public interface WaterLogRepository extends JpaRepository<WaterLog, Long> {
 
     List<WaterLog> findByUserIdAndLoggedOnOrderByCreatedAtAsc(Long userId, LocalDate loggedOn);
 
+    long deleteByUserIdAndLoggedOn(Long userId, LocalDate loggedOn);
+
     @Query("SELECT COALESCE(SUM(w.amountMl), 0) FROM WaterLog w WHERE w.user.id = :userId AND w.loggedOn = :date")
     int sumByUserIdAndDate(@Param("userId") Long userId, @Param("date") LocalDate date);
 
@@ -27,4 +29,3 @@ public interface WaterLogRepository extends JpaRepository<WaterLog, Long> {
                             @Param("from") LocalDate from,
                             @Param("to") LocalDate to);
 }
-
