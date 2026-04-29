@@ -25,13 +25,8 @@ public class FaqDataSeeder {
     @PostConstruct
     @Transactional
     public void seed() {
-        long existing = faqItemRepository.count();
-        if (existing > 0) {
-            log.debug("FAQ table already has {} item(s) — skipping seed", existing);
-            return;
-        }
 
-        log.info("FAQ table is empty — seeding default FAQ items…");
+        log.info("seeding default FAQ items…");
 
         List<FaqItem> items = List.of(
 
